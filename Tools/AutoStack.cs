@@ -85,7 +85,39 @@ internal class AutoStack
         return directories.Where(d => !Path.GetRelativePath(directory, d).StartsWith(".."));
     }
 
-    private static readonly HashSet<string> RawExtensions = [".cr2", ".cr3", ".dng"];
+    // List taken from https://github.com/immich-app/immich/blob/main/server/src/utils/mime-types.ts
+    private static readonly HashSet<string> RawExtensions = [
+        ".3fr",
+        ".ari",
+        ".arw",
+        ".cap",
+        ".cin",
+        ".cr2",
+        ".cr3",
+        ".crw",
+        ".dcr",
+        ".dng",
+        ".erf",
+        ".fff",
+        ".iiq",
+        ".k25",
+        ".kdc",
+        ".mrw",
+        ".nef",
+        ".nrw",
+        ".orf",
+        ".ori",
+        ".pef",
+        ".psd",
+        ".raf",
+        ".raw",
+        ".rw2",
+        ".rwl",
+        ".sr2",
+        ".srf",
+        ".srw",
+        ".x3f",
+    ];
 
     private static int GetFileTypePriority(Asset asset)
     {
