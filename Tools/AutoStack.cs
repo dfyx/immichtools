@@ -45,7 +45,7 @@ internal class AutoStack
                 .ThenBy(a => Path.GetFileNameWithoutExtension(a.OriginalFileName))
                 .ToArray();
 
-            Console.WriteLine("Stack {0}/{1}: {2}", i, stackCount, string.Join(", ", sortedAssets.Select(a => a.OriginalFileName).ToArray()));
+            Console.WriteLine("Stack {0}/{1}: {2}", i, stackCount, string.Join(", ", sortedAssets.Select(a => GetRelativePath(directory, a)).ToArray()));
             await client.PostAsJsonAsync(
                 "/api/stacks",
                 new CreateStack { AssetIds = sortedAssets.Select(a => a.Id).ToList() },
@@ -56,9 +56,9 @@ internal class AutoStack
                 var rawImageAsset = sortedAssets.LastOrDefault(a => GetFileTypePriority(a) == 0);
                 if (rawImageAsset != null)
                 {
-                    foreach(var asset in sortedAssets.Where(a => a.LocalDateTime != rawImageAsset.LocalDateTime))
+                    foreach (var asset in sortedAssets.Where(a => a.LocalDateTime != rawImageAsset.LocalDateTime))
                     {
-                        Console.WriteLine("Copying metadata from {0} to {1}", rawImageAsset.OriginalFileName, asset.LocalDateTime);
+                        Console.WriteLine("Copying metadata from {0} to {1}", GetRelativePath(directory, rawImageAsset), GetRelativePath(directory, asset));
                         await client.PutAsJsonAsync(
                             $"/api/assets/{asset.Id}",
                             new UpdateAsset
@@ -73,6 +73,11 @@ internal class AutoStack
             }
             i++;
         }
+    }
+
+    private static string GetRelativePath(string directory, Asset asset)
+    {
+        return Path.GetRelativePath(directory, asset.OriginalPath).Replace(Path.DirectorySeparatorChar, '/');
     }
 
     private static async Task<IEnumerable<string>> GetDirectoriesRecursiveAsync(string directory, HttpClient client)
