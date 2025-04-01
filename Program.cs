@@ -47,7 +47,7 @@ internal static class Program
         var directoryArgument = CreateDirectoryArgument();
         command.AddArgument(directoryArgument);
 
-        var dateArgument = new Argument<string>("The date and time to set");
+        var dateArgument = new Argument<string>("datetime", "The date and time to set");
         command.AddArgument(dateArgument);
 
         var recursiveOption = CreateRecursiveOption();
