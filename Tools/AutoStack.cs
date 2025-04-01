@@ -3,34 +3,17 @@ using ImmichTools.ReplyData;
 using ImmichTools.RequestData;
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace ImmichTools.Tools;
 
-internal class AutoStack
+internal class AutoStack : ToolBase
 {
-    private static HttpClient CreateHttpClient(string host, string apiKey)
-    {
-        var client = new HttpClient();
-        client.BaseAddress = new Uri(host);
-        client.DefaultRequestHeaders.Add("x-api-key", apiKey);
-        return client;
-    }
-
     internal static async Task RunAsync(string host, string apiKey, string directory, bool recursive, bool copyMetadata)
     {
         var client = CreateHttpClient(host, apiKey);
-        var directories = recursive
-            ? await GetDirectoriesRecursiveAsync(directory, client)
-            : [ directory ];
+        var assets = await GetAssetsAsync(client, directory, recursive);
 
-        var assetTasks = directories.Select(d => client.GetFromJsonAsync<Asset[]>(
-            "/api/view/folder?path=" + HttpUtility.UrlEncode(d),
-            SerializerContext.Default.AssetArray));
-        var assetArrays = await Task.WhenAll(assetTasks);
-        var assets = assetArrays.SelectMany(a => a ?? []).ToArray();
-
-        if(assets == null || assets.Length == 0)
+        if(assets.Length == 0)
         {
             return;
         }
@@ -73,21 +56,6 @@ internal class AutoStack
             }
             i++;
         }
-    }
-
-    private static string GetRelativePath(string directory, Asset asset)
-    {
-        return Path.GetRelativePath(directory, asset.OriginalPath).Replace(Path.DirectorySeparatorChar, '/');
-    }
-
-    private static async Task<IEnumerable<string>> GetDirectoriesRecursiveAsync(string directory, HttpClient client)
-    {
-        IEnumerable<string> directories = await client.GetFromJsonAsync("/api/view/folder/unique-paths", SerializerContext.Default.StringArray) ?? [ directory ];
-        if (directory.StartsWith("/"))
-        {
-            directories = directories.Select(d => d.StartsWith("/") ? d : "/" + d);
-        }
-        return directories.Where(d => !Path.GetRelativePath(directory, d).StartsWith(".."));
     }
 
     // List taken from https://github.com/immich-app/immich/blob/main/server/src/utils/mime-types.ts
