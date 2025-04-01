@@ -36,11 +36,7 @@ internal class DateFix : ToolBase
             baseDate = assets.Where(a => a.ExifInfo?.DateTimeOriginal != null).Min(a => a.ExifInfo!.DateTimeOriginal);
         }
 
-        foreach (var asset in assets)
-        {
-            await UpdateAssetDateAsync(client, directory, asset, baseDate, date);
-        }
-        // await Task.WhenAll(assets.Select(a => UpdateAssetDateAsync(client, directory, a, baseDate, date)));
+        await Task.WhenAll(assets.Select(a => UpdateAssetDateAsync(client, directory, a, baseDate, date)));
     }
 
     private static async Task UpdateAssetDateAsync(HttpClient client, string directory, Asset asset, DateTime? baseDate, DateTime date)
