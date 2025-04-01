@@ -10,5 +10,5 @@ internal class Asset
 
     public required DateTime LocalDateTime { get; set; }
 
-    public required ExifInfo ExifInfo { get; set; }
+    public ExifInfo? ExifInfo { get; set; }
 }

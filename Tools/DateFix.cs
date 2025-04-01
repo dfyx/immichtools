@@ -33,7 +33,7 @@ internal class DateFix : ToolBase
         DateTime? baseDate = null;
         if (relative)
         {
-            baseDate = assets.Min(a => a.ExifInfo.DateTimeOriginal);
+            baseDate = assets.Where(a => a.ExifInfo?.DateTimeOriginal != null).Min(a => a.ExifInfo!.DateTimeOriginal);
         }
 
         foreach (var asset in assets)
@@ -45,8 +45,8 @@ internal class DateFix : ToolBase
 
     private static async Task UpdateAssetDateAsync(HttpClient client, string directory, Asset asset, DateTime? baseDate, DateTime date)
     {
-        var newDate = (baseDate.HasValue ? date + (asset.ExifInfo.DateTimeOriginal - baseDate.Value) : date) ?? date;
-        if (newDate == asset.ExifInfo.DateTimeOriginal)
+        var newDate = (baseDate.HasValue ? date + (asset.ExifInfo?.DateTimeOriginal - baseDate.Value) : date) ?? date;
+        if (newDate == asset.ExifInfo?.DateTimeOriginal)
         {
             return;
         }

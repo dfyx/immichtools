@@ -47,8 +47,8 @@ internal class AutoStack : ToolBase
                             new UpdateAsset
                             {
                                 DateTimeOriginal = rawImageAsset.LocalDateTime,
-                                Latitude = rawImageAsset.ExifInfo.Latitude,
-                                Longitude = rawImageAsset.ExifInfo.Longitude
+                                Latitude = rawImageAsset.ExifInfo?.Latitude ?? asset.ExifInfo?.Latitude,
+                                Longitude = rawImageAsset.ExifInfo?.Longitude ?? asset.ExifInfo?.Latitude
                             },
                             SerializerContext.Default.UpdateAsset);
                     }
