@@ -18,6 +18,7 @@ internal static class Program
         rootCommand.AddGlobalOption(apiKeyOption);
 
         rootCommand.AddCommand(CreateAutoStackCommand(hostOption, apiKeyOption));
+        rootCommand.AddCommand(CreateDateFixCommand(hostOption, apiKeyOption));
 
         await rootCommand.InvokeAsync(args);
     }
@@ -36,6 +37,26 @@ internal static class Program
         command.AddOption(copyMetadataOption);
 
         command.SetHandler(AutoStack.RunAsync, hostOption, apiKeyOption, directoryArgument, recursiveOption, copyMetadataOption);
+        return command;
+    }
+
+    private static Command CreateDateFixCommand(Option<string> hostOption, Option<string> apiKeyOption)
+    {
+        var command = new Command("datefix", "Fixes asset dates");
+
+        var directoryArgument = CreateDirectoryArgument();
+        command.AddArgument(directoryArgument);
+
+        var dateArgument = new Argument<string>("The date and time to set");
+        command.AddArgument(dateArgument);
+
+        var recursiveOption = CreateRecursiveOption();
+        command.AddOption(recursiveOption);
+
+        var relativeOption = new Option<bool>("-R", "Set date and time relative to earliest asset");
+        command.AddOption(relativeOption);
+
+        command.SetHandler(DateFix.RunAsync, hostOption, apiKeyOption, directoryArgument, dateArgument, recursiveOption, relativeOption);
         return command;
     }
 
