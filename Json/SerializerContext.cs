@@ -4,7 +4,8 @@ namespace ImmichTools.Json;
 
 [JsonSourceGenerationOptions(
     WriteIndented = false,
-    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(RequestData.CreateStack))]
 [JsonSerializable(typeof(RequestData.UpdateAsset))]
 [JsonSerializable(typeof(ReplyData.Asset))]
