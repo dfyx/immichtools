@@ -46,7 +46,7 @@ internal class AutoStack : ToolBase
                             $"/api/assets/{asset.Id}",
                             new UpdateAsset
                             {
-                                DateTimeOriginal = rawImageAsset.LocalDateTime,
+                                DateTimeOriginal = rawImageAsset.ExifInfo?.DateTimeOriginal ?? asset.ExifInfo?.DateTimeOriginal,
                                 Latitude = rawImageAsset.ExifInfo?.Latitude ?? asset.ExifInfo?.Latitude,
                                 Longitude = rawImageAsset.ExifInfo?.Longitude ?? asset.ExifInfo?.Latitude
                             },
