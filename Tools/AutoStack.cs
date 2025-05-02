@@ -100,12 +100,13 @@ internal class AutoStack : ToolBase
         return FileTypePriorities.TryGetValue(extension, out var priority) ? priority : 0;
     }
 
-    private static readonly Regex BaseNameRegex = new Regex("\\A(?<BaseName>[a-zA-Z]+_[0-9]+)([_-].*)?\\Z");
+    private static readonly Regex BaseNameRegex = new(@"\A(?<BaseName>[a-zA-Z]+(?:_[0-9]+)+)([_-].*)?\Z");
 
     private static string GetBaseName(Asset asset)
     {
         var withoutExtension = Path.GetFileNameWithoutExtension(asset.OriginalFileName);
-        var match = BaseNameRegex.Match(withoutExtension);
-        return match.Success ? match.Groups["BaseName"].Value : withoutExtension;
+        var firstBlock = withoutExtension.Split('.').FirstOrDefault(b => !string.IsNullOrEmpty(b)) ?? withoutExtension;
+        var match = BaseNameRegex.Match(firstBlock);
+        return match.Success ? match.Groups["BaseName"].Value : firstBlock;
     }
 }
