@@ -1,6 +1,6 @@
 ﻿namespace ImmichTools.ReplyData;
 
-internal class Asset
+public class Asset
 {
     public required string Id { get; set; }
 

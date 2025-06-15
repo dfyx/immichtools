@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmichTools", "ImmichTools.csproj", "{C2B0FBDD-F356-43EA-A312-1547218C2EF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmichTools", "ImmichTools\ImmichTools.csproj", "{3DB1CB95-EEF9-42AF-8960-CAA733AD96B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImmichToolsTests", "ImmichToolsTests\ImmichToolsTests.csproj", "{81E02B10-BF53-4E27-860F-130052C632C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C2B0FBDD-F356-43EA-A312-1547218C2EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2B0FBDD-F356-43EA-A312-1547218C2EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2B0FBDD-F356-43EA-A312-1547218C2EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2B0FBDD-F356-43EA-A312-1547218C2EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB1CB95-EEF9-42AF-8960-CAA733AD96B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB1CB95-EEF9-42AF-8960-CAA733AD96B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB1CB95-EEF9-42AF-8960-CAA733AD96B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB1CB95-EEF9-42AF-8960-CAA733AD96B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E02B10-BF53-4E27-860F-130052C632C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E02B10-BF53-4E27-860F-130052C632C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E02B10-BF53-4E27-860F-130052C632C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E02B10-BF53-4E27-860F-130052C632C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
